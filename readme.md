@@ -27,7 +27,6 @@ Enable or disable Gutenberg editor for specific post types in WordPress. Perfect
 ## Changelog
 
 ### 1.1
-- Added top-level menu in admin
 - Removed Media (attachment) post type
 - Improved admin design and styling
 
