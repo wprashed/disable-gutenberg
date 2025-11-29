@@ -1,12 +1,20 @@
 <?php
 /*
 Plugin Name: Disable Gutenberg
+Plugin URI:  https://example.com/disable-gutenberg
 Description: Enable or disable Gutenberg editor for specific post types from a top-level admin menu in WordPress.
-Version: 1.2
-Author: Rashed Hossain
+Version:     1.2
+Author:      Rashed Hossain
+Author URI:  https://example.com
+Text Domain: disable-gutenberg
+Domain Path: /languages
+License:     GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
 
 class Disable_Gutenberg_Plugin {
 
@@ -22,8 +30,8 @@ class Disable_Gutenberg_Plugin {
     // Add top-level menu
     public function add_admin_menu() {
         add_menu_page(
-            'Disable Gutenberg',
-            'Disable Gutenberg',
+            __( 'Disable Gutenberg', 'disable-gutenberg' ),
+            __( 'Disable Gutenberg', 'disable-gutenberg' ),
             'manage_options',
             'disable-gutenberg',
             array( $this, 'settings_page' ),
@@ -37,7 +45,7 @@ class Disable_Gutenberg_Plugin {
         register_setting( 'dgb_settings_group', $this->option_name );
     }
 
-    // Filter to disable Gutenberg
+    // Disable Gutenberg for selected post types
     public function disable_gutenberg_for_selected_post_types( $use_block_editor, $post ) {
         $disabled_post_types = get_option( $this->option_name, array() );
         if ( isset( $post->post_type ) && in_array( $post->post_type, $disabled_post_types, true ) ) {
@@ -46,24 +54,24 @@ class Disable_Gutenberg_Plugin {
         return $use_block_editor;
     }
 
-    // Admin page
+    // Admin settings page
     public function settings_page() {
         $all_post_types = get_post_types( array( 'public' => true ), 'objects' );
         $disabled_post_types = get_option( $this->option_name, array() );
 
-        // Remove Media
+        // Remove Media (attachments)
         if ( isset( $all_post_types['attachment'] ) ) {
             unset( $all_post_types['attachment'] );
         }
         ?>
         <div class="wrap">
-            <h1 style="margin-bottom:20px;">Disable Gutenberg</h1>
-            <p>Select the post types for which you want to disable the Gutenberg editor.</p>
+            <h1><?php esc_html_e( 'Disable Gutenberg', 'disable-gutenberg' ); ?></h1>
+            <p><?php esc_html_e( 'Select the post types for which you want to disable the Gutenberg editor.', 'disable-gutenberg' ); ?></p>
             <form method="post" action="options.php" style="background:#fff;padding:20px;border:1px solid #ddd;border-radius:8px;max-width:600px;">
                 <?php settings_fields( 'dgb_settings_group' ); ?>
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row">Post Types</th>
+                        <th scope="row"><?php esc_html_e( 'Post Types', 'disable-gutenberg' ); ?></th>
                         <td>
                             <?php foreach ( $all_post_types as $post_type ): ?>
                                 <label style="display:block;margin-bottom:8px;font-weight:normal;">
@@ -75,15 +83,17 @@ class Disable_Gutenberg_Plugin {
                         </td>
                     </tr>
                 </table>
-                <?php submit_button('Save Changes'); ?>
+                <?php submit_button( __( 'Save Changes', 'disable-gutenberg' ) ); ?>
             </form>
         </div>
         <?php
     }
 
-    // Admin styles
-    public function enqueue_styles($hook) {
-        if ( $hook !== 'toplevel_page_disable-gutenberg' ) return;
+    // Admin styling
+    public function enqueue_styles( $hook ) {
+        if ( $hook !== 'toplevel_page_disable-gutenberg' ) {
+            return;
+        }
         echo '<style>
             .wrap h1 { font-size:24px; color:#0073aa; }
             .form-table th { width:200px; }
@@ -93,5 +103,4 @@ class Disable_Gutenberg_Plugin {
 
 }
 
-// Initialize plugin
 new Disable_Gutenberg_Plugin();
