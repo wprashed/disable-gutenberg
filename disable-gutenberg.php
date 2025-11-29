@@ -2,7 +2,7 @@
 /*
 Plugin Name: Disable Gutenberg
 Plugin URI:  https://example.com/disable-gutenberg
-Description: Enable or disable Gutenberg editor for specific post types from a top-level admin menu in WordPress.
+Description: Enable or disable Gutenberg editor for specific post types.
 Version:     1.2
 Author:      Rashed Hossain
 Author URI:  https://example.com
