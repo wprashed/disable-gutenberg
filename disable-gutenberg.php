@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Disable Gutenberg
-Plugin URI:  https://example.com/disable-gutenberg
+Plugin URI:  https://github.com/wprashed/disable-gutenberg
 Description: Enable or disable Gutenberg editor for specific post types.
 Version:     1.2
 Author:      Rashed Hossain
-Author URI:  https://example.com
+Author URI:  https://rashed.im
 Text Domain: disable-gutenberg
 Domain Path: /languages
 License:     GPLv2 or later
